@@ -1,0 +1,32 @@
+task_id: uma_conditional_protocol_disagreement
+unit: one Polygon UMA OOV2 request
+group: polygon:oov2:question_id
+prediction_time: proposal event, ordered by UTC/block/transaction/log
+target: int(resolved_price_raw) != int(proposed_price_raw)
+cohort: retrospectively challenged, linked, settled, transfer-reconciled
+horizon: eventual settlement; variable resolution delay
+target_is_independent_truth: false
+deployment_population_identified: false
+label_available_at: settlement event time (conservative proxy)
+native_features:
+  log_final_fee_raw: log(1 + RequestPrice.final_fee_raw), smallest asset units
+  liveness_hours: (ProposePrice.expiration_time - ProposePrice.time) / 3600
+  proposal_latency_hours: (ProposePrice.time - RequestPrice.time) / 3600
+  ancillary_bytes: decoded RequestPrice.ancillary_data_hex byte length
+  proposed_price_class: binary_zero/binary_one/indeterminate_half/early_expiration/other
+actor_features:
+  roles: [proposer, requester]
+  prior_completed: count of strictly earlier retained-primary settled requests in same role
+  prior_dispute_rate: disputed count / prior_completed
+  prior_rejection_rate: disputed and integer-disagreeing count / prior_completed
+  empty_history: count 0; both rates null
+excluded: [log_bond_raw, log_reward_plus1_raw, reward_to_bond_ratio, adapter_version, requester_is_polymarket_adapter]
+split_rule: purge whole crossing questions; require labels mature before next boundary
+validation_origin_utc: '2025-04-01T16:00:45Z'
+test_origin_utc: '2025-07-01T03:51:31Z'
+counts: {train: 474, validation: 153, test: 157, excluded: 26}
+fallback: training positive-class prior
+primary_metric: mean within-request repeated Brier loss
+primary_comparison: A2 minus validation-selected B-star
+repetitions: {conventional_fits: 1, llm_runs: 3}
+old_public_test_exposure: true

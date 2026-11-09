@@ -1,0 +1,230 @@
+{
+  "data_revision": "revision_20261106",
+  "layout_revision": "20261109",
+  "sample": {
+    "requests": 157,
+    "questions": 120,
+    "LLM_repeats": 3
+  },
+  "main_performance": [
+    {
+      "method": "Prior",
+      "brier": 0.2523613621449281,
+      "ci_low": 0.2352788014741227,
+      "ci_high": 0.2692927497124521
+    },
+    {
+      "method": "LR",
+      "brier": 0.270572523203183,
+      "ci_low": 0.2352528417025639,
+      "ci_high": 0.3064690326510247
+    },
+    {
+      "method": "RF",
+      "brier": 0.2333155827166317,
+      "ci_low": 0.2142202074542893,
+      "ci_high": 0.2540426592375132
+    },
+    {
+      "method": "GBM",
+      "brier": 0.2368477063615938,
+      "ci_low": 0.2212460960848885,
+      "ci_high": 0.2532752848638545
+    },
+    {
+      "method": "Ensemble",
+      "brier": 0.2355196879607252,
+      "ci_low": 0.220037439716142,
+      "ci_high": 0.2519867779215293
+    },
+    {
+      "method": "D0",
+      "brier": 0.3142231786934498,
+      "ci_low": 0.2803812324966765,
+      "ci_high": 0.3514490959599142
+    },
+    {
+      "method": "A1",
+      "brier": 0.2357937686972316,
+      "ci_low": 0.2207415616239042,
+      "ci_high": 0.2516942742946459
+    },
+    {
+      "method": "A2",
+      "brier": 0.2359761392633986,
+      "ci_low": 0.2208151654719088,
+      "ci_high": 0.2518642139187499
+    },
+    {
+      "method": "D_match",
+      "brier": 0.2359095579126708,
+      "ci_low": 0.220479384658284,
+      "ci_high": 0.2523005415476982
+    }
+  ],
+  "main_paired_callouts": [
+    {
+      "left": "A2",
+      "right": "Ensemble",
+      "family": "primary",
+      "delta": 0.0004564513026735,
+      "ci_low": -0.0008021768128717,
+      "ci_high": 0.0016768156914668,
+      "G": 120,
+      "p_raw": 0.4773,
+      "studentized_ci_low": -0.0008527635170366,
+      "studentized_ci_high": 0.0016922310241391,
+      "se": 0.0006389382954066,
+      "degenerate_draws": 0,
+      "inference_status": "approximate_conditional_group_inference"
+    },
+    {
+      "left": "A1",
+      "right": "D_match",
+      "family": "secondary",
+      "delta": -0.0001157892154393,
+      "ci_low": -0.0017139651390122,
+      "ci_high": 0.001343530206198,
+      "G": 120,
+      "p_raw": 0.8867,
+      "studentized_ci_low": -0.0018383465763245,
+      "studentized_ci_high": 0.0013197420088301,
+      "se": 0.0007844802691117,
+      "degenerate_draws": 0,
+      "inference_status": "approximate_conditional_group_inference"
+    }
+  ],
+  "predictor_access": [
+    {
+      "label": "Planner (A1)",
+      "left": "A1_noB",
+      "right": "A1_withB",
+      "family": "access_or_verification",
+      "N": 157,
+      "G": 120,
+      "delta": 0.0846015692671089,
+      "ci_low": 0.0479401221377969,
+      "ci_high": 0.1225355329463956
+    },
+    {
+      "label": "Verifier (A2)",
+      "left": "A2_noB",
+      "right": "A2_withB",
+      "family": "access_or_verification",
+      "N": 157,
+      "G": 120,
+      "delta": 0.0830772131948274,
+      "ci_low": 0.0473297828825293,
+      "ci_high": 0.1197274510706471
+    }
+  ],
+  "latency": [
+    {
+      "method": "Prior",
+      "brier": 0.2523613621449281,
+      "median_seconds": 0.001251756213605404,
+      "source": "cpu_latency_summary.csv"
+    },
+    {
+      "method": "LR",
+      "brier": 0.270572523203183,
+      "median_seconds": 0.011718382127583029,
+      "source": "cpu_latency_summary.csv"
+    },
+    {
+      "method": "GBM",
+      "brier": 0.2368477063615938,
+      "median_seconds": 0.014307060278952122,
+      "source": "cpu_latency_summary.csv"
+    },
+    {
+      "method": "RF",
+      "brier": 0.2333155827166317,
+      "median_seconds": 0.12752007599920034,
+      "source": "cpu_latency_summary.csv"
+    },
+    {
+      "method": "Ensemble",
+      "brier": 0.2355196879607252,
+      "median_seconds": 0.14099049288779497,
+      "source": "cpu_latency_summary.csv"
+    },
+    {
+      "method": "A1_withB",
+      "brier": 0.2354390362758484,
+      "median_seconds": 90.32118961866944,
+      "source": "ablation_results.csv"
+    },
+    {
+      "method": "A2_withB",
+      "brier": 0.2357667652078234,
+      "median_seconds": 116.56624952238052,
+      "source": "ablation_results.csv"
+    },
+    {
+      "method": "A1_noB",
+      "brier": 0.3200406055429574,
+      "median_seconds": 64.46658589318395,
+      "source": "ablation_results.csv"
+    },
+    {
+      "method": "A2_noB",
+      "brier": 0.3188439784026509,
+      "median_seconds": 95.33780344948173,
+      "source": "ablation_results.csv"
+    }
+  ],
+  "verification": [
+    {
+      "label": "Main",
+      "left": "A2",
+      "right": "A1",
+      "family": "secondary",
+      "delta": 0.0001823705661669,
+      "ci_low": -0.0002449390687739,
+      "ci_high": 0.0007735659076806,
+      "G": 120,
+      "p_raw": null,
+      "studentized_ci_low": null,
+      "studentized_ci_high": null,
+      "se": 0.0002661257067638,
+      "degenerate_draws": 1,
+      "inference_status": "exploratory_no_p",
+      "changed": 8,
+      "improved": 4,
+      "worsened": 4,
+      "fallback_associated_changes": 0
+    },
+    {
+      "label": "With $B^\\star$",
+      "left": "A2_withB",
+      "right": "A1_withB",
+      "family": "access_or_verification",
+      "N": 157,
+      "G": 120,
+      "delta": 0.0003277289319749,
+      "ci_low": -8.441633554082256e-05,
+      "ci_high": 0.0009217870330011,
+      "changed": 7,
+      "improved": 3,
+      "worsened": 4,
+      "fallback_associated_changes": 1
+    },
+    {
+      "label": "Without $B^\\star$",
+      "left": "A2_noB",
+      "right": "A1_noB",
+      "family": "access_or_verification",
+      "N": 157,
+      "G": 120,
+      "delta": -0.0011966271403064,
+      "ci_low": -0.0072167387660928,
+      "ci_high": 0.0040566767568302,
+      "changed": 16,
+      "improved": 7,
+      "worsened": 9,
+      "fallback_associated_changes": 0
+    }
+  ],
+  "scope": "Exploratory comparisons on the same historical test; no new model calls or timing measurements."
+}

@@ -1,0 +1,108 @@
+Verbosity: 2 (Standard Logging)
+	Failed to import torch or check CUDA availability!Please ensure you have the correct version of PyTorch installed by running `pip install -U torch`
+=================== System Info ===================
+AutoGluon Version:  1.6.1
+Python Version:     3.12.7
+Operating System:   Linux
+Platform Machine:   x86_64
+Platform Version:   #138~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:43:15 UTC 
+CPU Count:          48
+Pytorch Version:    Can't import torch
+CUDA Version:       Can't get cuda version from torch
+Memory Avail:       23.27 GB / 125.50 GB (18.5%)
+Disk Space Avail:   21.90 GB / 740.77 GB (3.0%)
+===================================================
+No presets specified! To achieve strong results with AutoGluon, it is recommended to use the available presets. Defaulting to `'medium'`...
+	Recommended Presets (For more details refer to https://auto.gluon.ai/stable/tutorials/tabular/tabular-essentials.html#presets):
+	presets='extreme'  : Use this if you have a GPU. The go-to preset for best results, and the one to use for benchmark comparisons. New in v1.6: far better than 'best' on datasets <100000 samples by using Tabular Foundation Models (TFMs) meta-learned on https://tabarena.ai: Nori, TabICLv2, and TabDPT-Turbo. Every model is free for commercial use. Requires `pip install autogluon.tabular[tabarena]`.
+	presets='noncommercial': New in v1.6: 'extreme' plus TabPFN-3, a frontier tabular foundation model created by Prior Labs. Stronger still, but commercial use requires a TabPFN-3 license: https://docs.priorlabs.ai/models#tabpfn-model-license
+	presets='best'     : Use this if you do not have a GPU. Maximize accuracy. Use in competitions.
+	presets='best_v150': New in v1.5: Better quality than 'best' and 5x+ faster to train. Give it a try!
+	presets='high'     : Strong accuracy with fast inference speed.
+	presets='high_v150': New in v1.5: Better quality than 'high' and 5x+ faster to train. Give it a try!
+	presets='good'     : Good accuracy with very fast inference speed.
+	presets='medium'   : Fast training time, ideal for initial prototyping.
+Beginning AutoGluon training ... Time limit = 3600s
+AutoGluon will save models to "/home/hy/develop/oracle-nature/oracle_predict_bench/models/autogluon"
+Train Data Rows:    474
+Train Data Columns: 11
+Tuning Data Rows:    153
+Tuning Data Columns: 11
+Label Column:       label
+Problem Type:       binary
+Preprocessing data...
+Selected class <--> label mapping:  class 1 = 1, class 0 = 0
+Using Feature Generators to preprocess the data ...
+AutoMLPipelineFeatureGenerator is already fit, so the training data will be processed via .transform() instead of .fit_transform().
+	Useless Original Features (Count: 1): ['liveness_hours']
+		These features carry no predictive signal and should be manually investigated.
+		This is typically a feature which has the same value for all rows.
+		These features do not need to be present at inference time.
+	Types of features in original data (raw dtype, special dtypes):
+		('float', [])  : 6 | ['log_final_fee_raw', 'proposal_latency_hours', 'proposer_prior_dispute_rate', 'proposer_prior_rejection_rate', 'requester_prior_dispute_rate', ...]
+		('int', [])    : 3 | ['ancillary_bytes', 'proposer_prior_completed', 'requester_prior_completed']
+		('object', []) : 1 | ['proposed_price_class']
+	Types of features in processed data (raw dtype, special dtypes):
+		('category', [])  : 1 | ['proposed_price_class']
+		('float', [])     : 5 | ['proposal_latency_hours', 'proposer_prior_dispute_rate', 'proposer_prior_rejection_rate', 'requester_prior_dispute_rate', 'requester_prior_rejection_rate']
+		('int', [])       : 3 | ['ancillary_bytes', 'proposer_prior_completed', 'requester_prior_completed']
+		('int', ['bool']) : 1 | ['log_final_fee_raw']
+Data preprocessing and feature engineering runtime = 0.01s ...
+AutoGluon will gauge predictive performance using evaluation metric: 'binary_brier'
+	This metric's sign has been flipped to adhere to being higher_is_better. The metric score can be multiplied by -1 to get the metric value.
+	This metric expects predicted probabilities rather than predicted class labels, so you'll need to use predict_proba() instead of predict()
+	To change this, specify the eval_metric parameter of Predictor()
+User-specified model hyperparameters to be fit:
+{
+	'RF': [{'n_estimators': 500, 'max_depth': 4, 'min_samples_leaf': 3, 'max_features': 'sqrt', 'bootstrap': True, 'criterion': 'gini', 'random_state': 17, 'ag_args': {'name_suffix': '_d4_l3'}}, {'n_estimators': 500, 'max_depth': 4, 'min_samples_leaf': 10, 'max_features': 'sqrt', 'bootstrap': True, 'criterion': 'gini', 'random_state': 17, 'ag_args': {'name_suffix': '_d4_l10'}}, {'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 3, 'max_features': 'sqrt', 'bootstrap': True, 'criterion': 'gini', 'random_state': 17, 'ag_args': {'name_suffix': '_d8_l3'}}, {'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 10, 'max_features': 'sqrt', 'bootstrap': True, 'criterion': 'gini', 'random_state': 17, 'ag_args': {'name_suffix': '_d8_l10'}}],
+	'GBM': [{'objective': 'binary', 'boosting_type': 'gbdt', 'learning_rate': 0.03, 'num_leaves': 7, 'min_data_in_leaf': 10, 'num_boost_round': 1000, 'seed': 17, 'ag_args': {'name_suffix': '_n7_l10'}}, {'objective': 'binary', 'boosting_type': 'gbdt', 'learning_rate': 0.03, 'num_leaves': 7, 'min_data_in_leaf': 30, 'num_boost_round': 1000, 'seed': 17, 'ag_args': {'name_suffix': '_n7_l30'}}, {'objective': 'binary', 'boosting_type': 'gbdt', 'learning_rate': 0.03, 'num_leaves': 15, 'min_data_in_leaf': 10, 'num_boost_round': 1000, 'seed': 17, 'ag_args': {'name_suffix': '_n15_l10'}}, {'objective': 'binary', 'boosting_type': 'gbdt', 'learning_rate': 0.03, 'num_leaves': 15, 'min_data_in_leaf': 30, 'num_boost_round': 1000, 'seed': 17, 'ag_args': {'name_suffix': '_n15_l30'}}],
+}
+Fitting 8 L1 models, fit_strategy="sequential" ...
+Fitting model: LightGBM_n7_l10 ... Training model for up to 3599.99s of the 3599.98s of remaining time.
+	Fitting with cpus=8, gpus=0, mem=0.0/23.7 GB
+	-0.2105	 = Validation score   (-binary_brier)
+	0.29s	 = Training   runtime
+	0.0s	 = Validation runtime
+Fitting model: LightGBM_n7_l30 ... Training model for up to 3599.69s of the 3599.69s of remaining time.
+	Fitting with cpus=8, gpus=0, mem=0.0/23.6 GB
+	-0.2155	 = Validation score   (-binary_brier)
+	0.21s	 = Training   runtime
+	0.0s	 = Validation runtime
+Fitting model: LightGBM_n15_l10 ... Training model for up to 3599.47s of the 3599.47s of remaining time.
+	Fitting with cpus=8, gpus=0, mem=0.0/23.4 GB
+	-0.2121	 = Validation score   (-binary_brier)
+	0.27s	 = Training   runtime
+	0.01s	 = Validation runtime
+Fitting model: LightGBM_n15_l30 ... Training model for up to 3599.19s of the 3599.19s of remaining time.
+	Fitting with cpus=8, gpus=0, mem=0.0/23.3 GB
+	-0.2133	 = Validation score   (-binary_brier)
+	0.29s	 = Training   runtime
+	0.0s	 = Validation runtime
+Fitting model: RandomForest_d4_l3 ... Training model for up to 3598.90s of the 3598.90s of remaining time.
+	Fitting with cpus=8, gpus=0
+	-0.2229	 = Validation score   (-binary_brier)
+	3.05s	 = Training   runtime
+	0.11s	 = Validation runtime
+Fitting model: RandomForest_d4_l10 ... Training model for up to 3595.68s of the 3595.68s of remaining time.
+	Fitting with cpus=8, gpus=0
+	-0.2188	 = Validation score   (-binary_brier)
+	2.91s	 = Training   runtime
+	0.12s	 = Validation runtime
+Fitting model: RandomForest_d8_l3 ... Training model for up to 3592.59s of the 3592.59s of remaining time.
+	Fitting with cpus=8, gpus=0
+	-0.2312	 = Validation score   (-binary_brier)
+	2.92s	 = Training   runtime
+	0.13s	 = Validation runtime
+Fitting model: RandomForest_d8_l10 ... Training model for up to 3589.50s of the 3589.50s of remaining time.
+	Fitting with cpus=8, gpus=0
+	-0.2178	 = Validation score   (-binary_brier)
+	3.07s	 = Training   runtime
+	0.14s	 = Validation runtime
+Fitting model: WeightedEnsemble_L2 ... Training model for up to 360.00s of the 3586.24s of remaining time.
+	Fitting 1 model on all data | Fitting with cpus=8, gpus=0, mem=0.0/23.7 GB
+	Ensemble Weights: {'LightGBM_n7_l10': 0.857, 'RandomForest_d8_l10': 0.143}
+	-0.2103	 = Validation score   (-binary_brier)
+	0.01s	 = Training   runtime
+	0.0s	 = Validation runtime
+AutoGluon training complete, total runtime = 14.06s ... Best model: WeightedEnsemble_L2 | Estimated inference throughput: 1085.2 rows/s (153 batch size)
+TabularPredictor saved. To load, use: predictor = TabularPredictor.load("/home/hy/develop/oracle-nature/oracle_predict_bench/models/autogluon")

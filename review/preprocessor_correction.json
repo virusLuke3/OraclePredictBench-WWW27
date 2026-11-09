@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-11-02T04:21:37.570479+00:00",
+  "observed_in_source": "AutoGluon1.6.1 default_learner.py lines469-492",
+  "issue": "Default unsupervised feature generator fitted concatenated train and validation data, violating intended train-only feature fitting. Test data not included.",
+  "correction": "Explicitly prefit AutoMLPipelineFeatureGenerator on train X only, then pass fitted generator to TabularPredictor.fit; integration-test novel validation category and train-constant feature. Refit full same candidate grid and select by validation only.",
+  "test_outcomes_previously_seen": true,
+  "reason": "Implementation audit, not selection based on test improvement",
+  "original_attempt_archive": "runs/attempt01_outage",
+  "new_test_interpretation": "Retrospective exploratory corrected benchmark; not new untouched test."
+}

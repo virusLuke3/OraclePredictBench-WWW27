@@ -1,0 +1,21 @@
+{
+  "primary_metric": "binary_brier",
+  "primary_comparison": ["A2", "B*"],
+  "difference": "method minus B*: negative is improvement",
+  "case_aggregation": "mean loss within request over repeats, then mean across requests",
+  "bootstrap_draws": 9999,
+  "bootstrap_seed": 20261102,
+  "sampling": "uniform pairs cluster bootstrap; retain entire questions and actual resampled N",
+  "confidence_level": 0.95,
+  "main_interval": "percentile",
+  "test": "two-sided null-centered cluster bootstrap-t; no p if any degenerate draws or G < 30",
+  "secondary_family": [["A1", "D0"], ["A2", "A1"], ["A1", "D_match"]],
+  "multiplicity": "Holm, secondary family only",
+  "calendar_days": [7, 14, 28],
+  "calendar_rule": "merge contiguous bins spanned by any complete question; retain all members",
+  "secondary_metrics": ["log_loss", "AUROC", "AveragePrecision", "balanced_accuracy_at_0.5"],
+  "log_loss_epsilon": 0.000001,
+  "calibration_bins": 5,
+  "stability_groups": ["test chronological halves", "proposer history present or absent", "final resolution class (diagnostic, outcome-defined)"],
+  "interpretation": "exploratory retrospective public benchmark; conditional on fitted models and fixed runs"
+}

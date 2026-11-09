@@ -1,0 +1,40 @@
+{
+  "task": "conditional eventual protocol integer disagreement",
+  "retrospective_cohort": true,
+  "independent_truth": false,
+  "features": [
+    "log_final_fee_raw",
+    "liveness_hours",
+    "proposal_latency_hours",
+    "ancillary_bytes",
+    "proposed_price_class",
+    "proposer_prior_completed",
+    "proposer_prior_dispute_rate",
+    "proposer_prior_rejection_rate",
+    "requester_prior_completed",
+    "requester_prior_dispute_rate",
+    "requester_prior_rejection_rate"
+  ],
+  "excluded": [
+    "log_bond_raw",
+    "log_reward_plus1_raw",
+    "reward_to_bond_ratio",
+    "adapter_version",
+    "requester_is_polymarket_adapter"
+  ],
+  "split": {
+    "validation_origin": "2025-04-01 16:00:45+00:00",
+    "test_origin": "2025-07-01 03:51:31+00:00",
+    "rule": "purge entire cross-boundary question, then exclude labels not settled before next original boundary",
+    "legacy_public_test_reused": true,
+    "label_availability": "conservative Settle event time",
+    "group_rule": "polygon:oov2:question_id; no independently verified wider event mapping",
+    "frozen_weights": true,
+    "history_population": 40534
+  },
+  "fallback": "training_class_prior",
+  "main_metric": "binary_brier",
+  "main_comparison": "A2 minus validation-selected B*",
+  "prediction_intervals": "not applicable to binary probability outputs",
+  "created_at": "2026-11-02T02:58:48.704627+00:00"
+}

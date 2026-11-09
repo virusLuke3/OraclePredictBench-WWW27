@@ -1,0 +1,176 @@
+{
+  "revision": "20261109_green_blue",
+  "purpose": "图中文字与已有执行材料逐项对应；不将研究目标画成已证实结论。",
+  "verification_scope": "本地文件、代码及执行记录核对；不是独立外部事实认证。",
+  "figure_one_contains_numerals": false,
+  "claims": [
+    {
+      "label": "Proposal-time features / Feature audit",
+      "meaning": "从已发布历史请求重建提案时可用特征；队列依据后续事件回溯筛选。",
+      "evidence": [
+        "metadata/feature_availability_audit.csv",
+        "metadata/split_manifest.parquet",
+        "src/oraclepredict/data.py"
+      ],
+      "boundary": "时点审计不等于证明无任何泄漏；未做独立链上收据核验。",
+      "evidence_sha256": {
+        "metadata/feature_availability_audit.csv": "223ea262203fbf13a05645ba8be2b9bd1294d3592c5ddc75b01d8654fdce3f7e",
+        "metadata/split_manifest.parquet": "eabc15aa85ad8d782dcc658d00abb9e22254c9b6de71f11b8ba7a76b48a90b30",
+        "src/oraclepredict/data.py": "1a2c92bd8f41ab6d8662ebd9605ece845b236ceff78448aef2ac4c946c3d0ebd"
+      }
+    },
+    {
+      "label": "Conventional models",
+      "meaning": "先验、逻辑回归、随机森林、LightGBM和验证集选定的集成模型已有测试预测。",
+      "evidence": [
+        "runs/baseline_test.parquet",
+        "Results/Tables/main_results.csv"
+      ],
+      "boundary": "有限候选搜索；未开展 AutoGluon TimeSeries 或 TabPFN 实验。",
+      "evidence_sha256": {
+        "runs/baseline_test.parquet": "53729cf3741f7b4967a211d72dc7c20f51e38e0408566d7202a5646a97cc9ecf",
+        "Results/Tables/main_results.csv": "41873a9b136e5046beb460120a566574a49d39840f3443d41257bf3e628c436f"
+      }
+    },
+    {
+      "label": "Direct LLM / Tool-using LLM",
+      "meaning": "直接推理、工具规划及附加验证配置均已运行并保存输出与轨迹。",
+      "evidence": [
+        "runs/agents_test.parquet",
+        "review/execution_validation.json",
+        "runs/revision_20261106/agents_test_execution.json"
+      ],
+      "boundary": "受限只读工具；图中不声称验证成功，也不是开放环境自主 Agent 测试。",
+      "evidence_sha256": {
+        "runs/agents_test.parquet": "34f4206f0444c161508deec0548c7a08fda16c66207e0bbfa38f33fbaab7b43c",
+        "review/execution_validation.json": "aebf853722070e208dff305fca110fa47cc340a1eef85e2a8f788ebcebae867d",
+        "runs/revision_20261106/agents_test_execution.json": "c094c2ad5598e0a6fd160ad631a542a654ab4d9412a2b4dc9734b4245e4cb2cb"
+      }
+    },
+    {
+      "label": "Disagreement forecast / Recorded outcomes / Retrospective evaluation / Brier scoring",
+      "meaning": "历史结算的整数结果与提案值是否一致构成协议分歧标签，用于计算 Brier。",
+      "evidence": [
+        "Data/Processed_Data/test_labels.parquet",
+        "Results/Tables/main_results.csv",
+        "src/oraclepredict/data.py"
+      ],
+      "boundary": "不是实时前瞻试验，也不是独立外部事实标签。",
+      "evidence_sha256": {
+        "Data/Processed_Data/test_labels.parquet": "a2dc213fa70b3e509112513c291bcbdcd92dbf2d17b99c86678687b4e7393b75",
+        "Results/Tables/main_results.csv": "41873a9b136e5046beb460120a566574a49d39840f3443d41257bf3e628c436f",
+        "src/oraclepredict/data.py": "1a2c92bd8f41ab6d8662ebd9605ece845b236ceff78448aef2ac4c946c3d0ebd"
+      }
+    },
+    {
+      "label": "Paired intervals",
+      "meaning": "按问题簇配对重采样已保存预测损失，计算性能差异的区间。",
+      "evidence": [
+        "Results/Tables/comparisons.csv",
+        "Results/revision_20261106/paired_comparisons.csv",
+        "Results/revision_20261106/bootstrap_indices.npz"
+      ],
+      "boundary": "条件于现有拟合和运行的探索性区间；不是每条预测的可信度。",
+      "evidence_sha256": {
+        "Results/Tables/comparisons.csv": "d9b796f2656eeeaea4d6226cd0fa9b5286ba1df15836dfeff9652369b440f0de",
+        "Results/revision_20261106/paired_comparisons.csv": "148a8562869cd9ddc7ca6fc91935b4dc305f5bcca5d0d5497f01060c297dd075",
+        "Results/revision_20261106/bootstrap_indices.npz": "70e293f01ae0f59ba6d185f1fdd6bbffc901275aa83094d70aa375c87334d6cc"
+      }
+    },
+    {
+      "label": "Warm-run latency",
+      "meaning": "使用已有模型调用记录和 CPU 重放计时，计入相应数据包准备、工具、验证和重试。",
+      "evidence": [
+        "Results/revision_20261106/ablation_results.csv",
+        "Results/revision_20261106/cpu_latency_summary.csv",
+        "Results/revision_20261106/physical_calls_revision.csv"
+      ],
+      "boundary": "冷启动与离线重建另计；CPU 和 GPU 硬件不同；不声称完整部署成本或美元费用。",
+      "evidence_sha256": {
+        "Results/revision_20261106/ablation_results.csv": "b99e5405a56403d1894037bcc7d3725b1cf0776d0ff35792ce51473fc36b8ef9",
+        "Results/revision_20261106/cpu_latency_summary.csv": "191225b133b34a3a24e6fcfea5e9fd9ad0e2312308c9cbfbb69375afb79d1c46",
+        "Results/revision_20261106/physical_calls_revision.csv": "394d6e5cf958044cd22d82a64f8ebc794a79622788eabda5d404246b9994c586"
+      }
+    },
+    {
+      "label": "Temporal split / Reused historical test",
+      "meaning": "按时间和问题隔离划分，但历史测试集先前已被查看。",
+      "evidence": [
+        "metadata/split_manifest.parquet",
+        "Results/revision_20261106/summary.json",
+        "paper/main.tex"
+      ],
+      "boundary": "未完成新的未接触后续留出测试；比较属于探索性分析。",
+      "evidence_sha256": {
+        "metadata/split_manifest.parquet": "eabc15aa85ad8d782dcc658d00abb9e22254c9b6de71f11b8ba7a76b48a90b30",
+        "Results/revision_20261106/summary.json": "558d2d0a4e187fa72b44b50b6d68bf9fc84492031a9e5ad262455e04e86e2373",
+        "paper/main.tex": "0013b7bc4d9b4ad874c5726164f80af04a5e2de30431fe86dabd275d70f61dba"
+      }
+    },
+    {
+      "label": "Controlled comparisons / Agent comparisons",
+      "meaning": "已有预测器访问消融、证据匹配对照，以及增加验证步骤的比较。",
+      "evidence": [
+        "review/revision_20261106/ablation_execution_audit.json",
+        "Results/Tables/comparisons.csv",
+        "Results/revision_20261106/paired_comparisons.csv"
+      ],
+      "boundary": "这些是已执行的对照，不代表已经证明规划或验证具有额外收益，也不是完整析因设计。",
+      "evidence_sha256": {
+        "review/revision_20261106/ablation_execution_audit.json": "cbc9abbf34641fe90d63625d0ed16cdbd31aa12fb748a8f3276465c8f7ef3b51",
+        "Results/Tables/comparisons.csv": "d9b796f2656eeeaea4d6226cd0fa9b5286ba1df15836dfeff9652369b440f0de",
+        "Results/revision_20261106/paired_comparisons.csv": "148a8562869cd9ddc7ca6fc91935b4dc305f5bcca5d0d5497f01060c297dd075"
+      }
+    }
+  ],
+  "saved_prediction_records": {
+    "runs/baseline_test.parquet": {
+      "rows": 785,
+      "unique_requests": 157,
+      "method_counts": {
+        "Ensemble": 157,
+        "GBM": 157,
+        "RF": 157,
+        "LR": 157,
+        "Prior": 157
+      },
+      "probabilities_in_unit_interval": true,
+      "fallback_outputs": 0
+    },
+    "runs/agents_test.parquet": {
+      "rows": 1884,
+      "unique_requests": 157,
+      "method_counts": {
+        "D0": 471,
+        "A1": 471,
+        "A2": 471,
+        "D_match": 471
+      },
+      "probabilities_in_unit_interval": true,
+      "fallback_outputs": 0
+    },
+    "runs/revision_20261106/agents_test.parquet": {
+      "rows": 1884,
+      "unique_requests": 157,
+      "method_counts": {
+        "A1_noB": 471,
+        "A2_noB": 471,
+        "A1_withB": 471,
+        "A2_withB": 471
+      },
+      "probabilities_in_unit_interval": true,
+      "fallback_outputs": 5
+    }
+  },
+  "result_values_unchanged": true,
+  "new_inference_runs": false,
+  "unsupported_claims_excluded": [
+    "信息绝对有效或无任何泄漏",
+    "Agent 优于常规预测器",
+    "验证保证改正事实错误",
+    "全新的未接触未来测试",
+    "真实部署效果或完整部署成本",
+    "外部事实真值验证"
+  ],
+  "style": "恢复用户指定的绿蓝双层版式、黑色线稿图标、圆角框、箭头与虚线对应关系；只修正内容和成功暗示。"
+}
